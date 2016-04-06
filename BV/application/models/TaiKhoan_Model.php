@@ -41,9 +41,19 @@ class TaiKhoan_Model extends CI_Model {
         $this->db->update('taikhoan', $data);
     }
 
-    public function save() {
+    function save() {
         $this->db->insert('taikhoan', $data);
         //return $this->db->insert_idTaiKhoan();
+    }
+    
+    function get_search() {
+        $keysearch = $this->input->post('search');
+        $this->db->like('idTaiKhoan',$keysearch);
+        $this->db->or_like('TaiKhoan',$keysearch);
+        $this->db->or_like('Quyen',$keysearch);
+        $data_get = $this->db->get('taikhoan');
+        return $data_get->result();
+        
     }
 
 }
