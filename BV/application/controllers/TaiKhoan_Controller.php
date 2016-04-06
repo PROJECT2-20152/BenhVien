@@ -24,6 +24,19 @@ class TaiKhoan_Controller extends CI_Controller {
         $data['id'] = $kd;
         $this->load->view('TaiKhoan_capnhat', $data);
     }
+    
+    function detail() {
+        $kd = $this->uri->segment(3);
+        if ($kd == NULL) {
+            redirect('TaiKhoan_Controller');
+        }
+        $dt = $this->TaiKhoan_Model->edit($kd);
+        $data['tk'] = $dt->TaiKhoan;
+        $data['mk'] = $dt->MatKhau;
+        $data['q'] = $dt->Quyen;
+        $data['id'] = $kd;
+        $this->load->view('TaiKhoan_ChiTiet', $data);
+    }
 
     function delete() {
         $u = $this->uri->segment(3);
@@ -59,6 +72,12 @@ class TaiKhoan_Controller extends CI_Controller {
         } else {
             redirect('TaiKhoan_Controller/edit/' . $id);
         }
+    }
+    
+    function search() {
+        $data['data_get'] = $this->TaiKhoan_Model->get_search();
+        $this->load->view('DSTaiKhoan',$data);
+        
     }
 
 }
